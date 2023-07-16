@@ -13,13 +13,28 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
+import "./ResponsiveAppBar.module.scss";
+import { NavLink } from "react-router-dom";
 
-const pages = ["Home", "Tratamientos", "Clinica", "Equipo", "Contacto"];
-const settings = ["Profile", "Account", "Logout"];
+
+const pages = [
+  { title: "Home", path: "/" },
+  // { title: "Tratamientos", path: "/" },
+  // { title: "Clinica", path: "/" },
+  // { title: "Equipo", path: "/" },
+  // { title: "Contacto", path: "/" },
+];
+const settings = [
+  { title: "Profile", path: "/", handle: null },
+  // { title: "Acount", path: "/", handle: null },
+  // { title: "Logout", path: "/", handle: null },
+];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -90,7 +105,7 @@ function ResponsiveAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center">{page.title}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -117,14 +132,47 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.title}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                {page.title}
               </Button>
             ))}
           </Box>
+
+          <Box sx={{ flexGrow: 0, display: { xs: "flex" } }}>
+              <NavLink style={{ textDecoration: "none" }} to="/login">
+                <Button
+                  variant="contained"
+                  size="small"
+                  // startIcon={<LoginTwoToneIcon />}
+                  sx={{
+                    my: 2,
+                    mr: 1,
+                    color: "white",
+                    bgcolor: "primary.dark",
+                  }}
+                >
+                  Login
+                </Button>
+              </NavLink>
+
+              <NavLink style={{ textDecoration: "none" }} to="/register">
+                <Button
+                  variant="contained"
+                  size="small"
+                  //startIcon={<AppRegistrationTwoToneIcon />}
+                  sx={{
+                    my: 2,
+                    color: "white",
+                    bgcolor: "primary.dark",
+                  }}
+                >
+                  Register
+                </Button>
+              </NavLink>
+            </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
@@ -156,7 +204,7 @@ function ResponsiveAppBar() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography textAlign="center">{setting.title}</Typography>
                 </MenuItem>
               ))}
             </Menu>
