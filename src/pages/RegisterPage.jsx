@@ -91,6 +91,14 @@ export default function SignUp() {
                   autoComplete="family-name"
                 />
               </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  id="birthday"
+                  label="Fecha de nacimiento"
+                  name="birthday"
+                />
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -113,12 +121,15 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="Quiero recibir promociones a mi email."
+                <TextField
+                  fullWidth
+                  name="phoneNumber"
+                  label="Teléfono"
+                  type="phoneNumber"
+                  id="phoneNumber"
                 />
+              </Grid>
+              <Grid item xs={12}>
               </Grid>
             </Grid>
             <Button
@@ -129,10 +140,10 @@ export default function SignUp() {
             >
               Crear cuenta
             </Button>
-            <Grid container justifyContent="flex-end">
+            <Grid container justifyContent="center">
               <Grid item>
                 <Link href="/login" variant="body2">
-                  Ya tienes una cuenta? Iniciar sesión
+                  ¿Ya tienes una cuenta? Iniciar sesión
                 </Link>
               </Grid>
             </Grid>
