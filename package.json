@@ -21,8 +21,10 @@
     "generate-react-cli": "^8.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-jwt": "^1.2.0",
     "react-redux": "^8.1.1",
     "react-router-dom": "^6.14.1",
+    "redux-persist": "^6.0.0",
     "sass": "^1.63.6"
   },
   "devDependencies": {
