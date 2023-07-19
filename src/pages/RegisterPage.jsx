@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -14,6 +12,9 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useState, useEffect } from "react";
+
+import authService from "../_services/authService";
 
 function Copyright(props) {
   return (
@@ -33,12 +34,12 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(null);
+  const [credentials, setCredentials] = useState(" ");
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -50,13 +51,33 @@ export default function SignUp() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
+      user_first_name: data.get("user_first_name"),
+      user_last_name: data.get("user_last_name"),
       email: data.get("email"),
       password: data.get("password"),
     });
+    register(credentials);
+  };
+
+  const register = async (credentials) => {
+    try {
+      const response = await authService.register(credentials);
+      setError(null);
+      setCredentials(credentials);
+    } catch (error) {
+      // setError(error.response.data.message);
+      console.log(error);
+    }
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      {/* {error && (
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          {error}
+        </Alert>
+      )} */}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -83,10 +104,10 @@ export default function SignUp() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="user_first_name"
                   required
                   fullWidth
-                  id="firstName"
+                  id="user_first_name"
                   label="Nombre"
                   autoFocus
                 />
@@ -95,20 +116,20 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
+                  id="user_last_name"
                   label="Apellidos"
-                  name="lastName"
+                  name="user_last_name"
                   autoComplete="family-name"
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <TextField
                   fullWidth
                   id="birthday"
                   label="Fecha de nacimiento"
                   name="birthday"
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   required
@@ -144,15 +165,15 @@ export default function SignUp() {
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  name="phoneNumber"
+                  name="phone_number"
                   label="Teléfono"
-                  type="phoneNumber"
-                  id="phoneNumber"
+                  type="int"
+                  id="phone_number"
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}></Grid>
             </Grid>
             <Button
