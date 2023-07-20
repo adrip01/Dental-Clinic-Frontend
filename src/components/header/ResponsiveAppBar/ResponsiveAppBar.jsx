@@ -33,7 +33,7 @@ const pages = [
   // { title: "Contacto", path: "/" },
 ];
 const settings = [
-  { title: "Profile", path: "/profile", handle: null },
+  { title: "Profile", path: "/users/profile", handle: null },
   // { title: "Acount", path: "/", handle: null },
   { title: "Logout", path: "/", handle: handleLogout },
 ];
