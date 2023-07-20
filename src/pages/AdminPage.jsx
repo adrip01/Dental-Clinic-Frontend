@@ -19,7 +19,6 @@ import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
@@ -77,10 +76,10 @@ export default function AdminPage() {
   const rows = [];
 
   function descendingComparator(a, b, orderBy) {
-    if (orderBy === 'id') {
+    if (orderBy === "id") {
       return b.id - a.id;
     }
-    if (orderBy === 'role.role') {
+    if (orderBy === "role.role") {
       return b.role.role.localeCompare(a.role.role);
     }
     if (b[orderBy] < a[orderBy]) {
@@ -93,17 +92,15 @@ export default function AdminPage() {
   }
 
   function getComparator(order, orderBy) {
-    if (orderBy === 'id') {
-      return order === 'desc'
-        ? (a, b) => b.id - a.id
-        : (a, b) => a.id - b.id;
-    } 
-    if (orderBy === 'role') {
-      return order === 'desc'
-        ? (a, b) => descendingComparator(a, b, 'role.role')
-        : (a, b) => -descendingComparator(a, b, 'role.role');
+    if (orderBy === "id") {
+      return order === "desc" ? (a, b) => b.id - a.id : (a, b) => a.id - b.id;
     }
-    return order === 'desc'
+    if (orderBy === "role") {
+      return order === "desc"
+        ? (a, b) => descendingComparator(a, b, "role.role")
+        : (a, b) => -descendingComparator(a, b, "role.role");
+    }
+    return order === "desc"
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
@@ -124,7 +121,7 @@ export default function AdminPage() {
     {
       id: "user_id",
       numeric: true,
-      disablePadding: true,
+      disablePadding: false,
       label: "ID",
     },
     {
@@ -195,8 +192,8 @@ export default function AdminPage() {
           {headCells.map((headCell) => (
             <TableCell
               key={headCell.id}
-              align={headCell.numeric ? "right" : "left"}
-              padding={headCell.disablePadding ? "none" : "normal"}
+              align={"left"}
+              padding={"normal"}
               sortDirection={orderBy === headCell.id ? order : false}
             >
               <TableSortLabel
@@ -402,7 +399,7 @@ export default function AdminPage() {
                       component="th"
                       id={labelId}
                       scope="row"
-                      padding="none"
+                      padding="normal"
                     >
                       {row.id}
                     </TableCell>

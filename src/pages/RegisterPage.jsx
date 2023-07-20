@@ -50,12 +50,12 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const credentials = {
       user_first_name: data.get("user_first_name"),
       user_last_name: data.get("user_last_name"),
       email: data.get("email"),
       password: data.get("password"),
-    });
+    };
     register(credentials);
   };
 
@@ -63,7 +63,6 @@ export default function SignUp() {
     try {
       const response = await authService.register(credentials);
       setError(null);
-      setCredentials(credentials);
     } catch (error) {
       // setError(error.response.data.message);
       console.log(error);
