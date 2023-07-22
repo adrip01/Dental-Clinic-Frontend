@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 
 // @MUI
 import { Container, Typography } from "@mui/material";
-import userService from "../_services/userService";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -15,33 +14,41 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SchoolIcon from "@mui/icons-material/School";
-
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import PhoneIcon from '@mui/icons-material/Phone';
 import { styled } from "@mui/material/styles";
-import { NavLink } from "react-router-dom";
 
-const initialFormValues = {
+import userService from "../_services/userService";
+import { NavLink } from "react-router-dom";
+import { format } from "date-fns";
+
+const initialuserValues = {
   user_first_name: "",
   user_last_name: "",
   email: "",
+  birthday: "",
+  phone_number: "",
 };
 
 export default function ProfilePage() {
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const token = useSelector((state) => state.auth.token);
-  const [formValues, setFormValues] = useState(initialFormValues);
+  const [userValues, setuserValues] = useState(initialuserValues);
 
   useEffect(() => {
     getProfile();
   }, []);
 
   useEffect(() => {
-    setFormValues({
-      user_first_name: user.results?.user_first_name || "",
-      user_last_name: user.results?.user_last_name || "",
-      email: user.results?.email || "",
+    setuserValues({
+      user_first_name: user.results?.user_first_name,
+      user_last_name: user.results?.user_last_name,
+      email: user.results?.email,
+      birthday: user.results?.birthday,
+      phone_number: user.results?.phone_number,
     });
   }, [user]);
 
@@ -50,14 +57,9 @@ export default function ProfilePage() {
     try {
       const data = await userService.getProfile(token);
       setUser(data);
-      setFormValues({
-        user_first_name: data.user_first_name,
-        user_last_name: data.user_last_name,
-        email: data.email,
-      });
       console.log(data);
       console.log(user);
-      console.log(formValues);
+      console.log(userValues);
     } catch (error) {
       console.log(error);
     } finally {
@@ -76,36 +78,73 @@ export default function ProfilePage() {
             margin: "auto",
             marginTop: 20,
             minWidth: 275,
-            maxWidth: 350,
+            maxWidth: 500,
             alignItems: "center",
           }}
         >
           <CardContent>
             <Box sx={{ flexGrow: 1 }}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
+              <Grid
+                container
+                spacing={2}
+                direction="column"
+                alignItems="center"
+                justify="center"
+              >
+                <Grid item xs={12}>
+                  
+                  <AccountCircleIcon
+                    sx={{ fontSize: 90, color: "primary.light" }}
+                  />
                   <Typography
                     sx={{ mt: 4, mb: 2 }}
                     variant="h6"
                     component="div"
                   >
-                    {`${formValues.user_first_name} ${formValues.user_last_name}`}
+                    {`${userValues.user_first_name} ${userValues.user_last_name}`}
                   </Typography>
 
                   <List>
                     <ListItem>
                       <ListItemIcon>
-                        <SchoolIcon />
+                        <MailOutlineIcon />
                       </ListItemIcon>
-                      <ListItemText primary={`Email: ${formValues.email}`} />
+                      <ListItemText primary={`${userValues.email}`} />
                     </ListItem>
                   </List>
+
+                  {userValues.birthday && (
+                    <List>
+                      <ListItem>
+                        <ListItemIcon>
+                          <CalendarMonthIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={format(
+                            new Date(userValues.birthday),
+                            "yyyy-MM-dd"
+                          )}
+                        />
+                      </ListItem>
+                    </List>
+                  )}
+
+                  {userValues.phone_number && (
+                    <List>
+                      <ListItem>
+                        <ListItemIcon>
+                          <PhoneIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={`${userValues.phone_number}`} />
+                      </ListItem>
+                    </List>
+                  )}
                 </Grid>
               </Grid>
             </Box>
           </CardContent>
           <CardActions style={{ justifyContent: "center" }}>
-            <NavLink style={{ textDecoration: "none" }} to="/account">
+            <NavLink style={{ textDecoration: "none" }} to="/users/account">
               <Button size="small">EDIT PROFILE</Button>
             </NavLink>
           </CardActions>

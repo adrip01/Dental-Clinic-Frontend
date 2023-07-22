@@ -34,7 +34,7 @@ const pages = [
 ];
 const settings = [
   { title: "Profile", path: "/users/profile", handle: null },
-  // { title: "Acount", path: "/", handle: null },
+  { title: "Account", path: "/users/account" },
   { title: "Logout", path: "/", handle: handleLogout },
 ];
 
