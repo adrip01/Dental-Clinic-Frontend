@@ -33,4 +33,18 @@ userService.getProfile = async (token) => {
    return response.data;
 };
 
+userService.getAppointments = async (token) => {
+   const options = {
+      method: "GET",
+      url: `${global.BASE_API_URL}/users/user-appointments`,
+      headers: {
+         accept: "application/json",
+         Authorization: `Bearer ${token}`,
+      },
+   };
+   //await sleep(2000); // TODO
+   const response = await axios.request(options);
+   return response.data;
+};
+
 export default userService;

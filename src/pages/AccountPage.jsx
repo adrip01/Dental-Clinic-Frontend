@@ -28,6 +28,8 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 //
 import userService from "../_services/userService";
+import { NavLink } from "react-router-dom";
+import { format } from "date-fns";
 
 // ----------------------------------------------------------------------
 
@@ -37,14 +39,14 @@ const initialFormValues = {
   user_first_name: "",
   user_last_name: "",
   email: "",
-  password: "",
-  verify_password: "",
+  birthday: "",
+  phone_number: "",
+  // password: "",
+  // verify_password: "",
 };
 
-export default function AccountPage() {
+function AccountPage() {
   // hooks
-  const [showPassword, setShowPassword] = useState(false);
-  const [editProfile, setEditProfile] = useState(false);
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [formValues, setFormValues] = useState(initialFormValues);
@@ -56,20 +58,15 @@ export default function AccountPage() {
     getProfile();
   }, []);
 
-  
-
   // handlers
-  const handleClickEditProfile = () => setEditProfile((edit) => !edit);
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
-      [name]: value, // key: value
+    setFormValues((oldState) => {
+      return {
+        ...oldState,
+        [name]: value, // key: value
+      };
     });
   };
 
@@ -77,11 +74,11 @@ export default function AccountPage() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      user_first_name: data.get("user_fisrt_name"),
+      user_first_name: data.get("user_first_name"),
       user_last_name: data.get("user_last_name"),
       email: data.get("email"),
-      password: data.get("password"),
-      verify_password: data.get("verify_password"),
+      birthday: data.get("birthday"),
+      phone_number: data.get("phone_number"),
     });
   };
 
@@ -89,37 +86,14 @@ export default function AccountPage() {
     setIsLoading(true);
     try {
       const data = await userService.getProfile(token);
-      setUser(data);
+      setUser(data.results);
       setFormValues({
-        firstName: data.user_first_name,
-        lastName: data.user_last_name,
-        email: data.email,
-        birthday: data.birthday,
-        phone_number: data.phone_number,
+        user_first_name: data.results.user_first_name,
+        user_last_name: data.results.user_last_name,
+        email: data.results.email,
+        birthday: format(new Date(data.results.birthday), "yyyy-MM-dd"),
+        phone_number: data.results.phone_number,
       });
-      console.log(data);
-      // console.log(user),
-      // console.log(formValues)
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    console.log("User:", user);
-  }, [user]);
-  
-  useEffect(() => {
-    console.log("FormValues:", formValues);
-  }, [formValues]);
-
-  const saveProfile = async () => {
-    setIsLoading(true);
-    try {
-      const data = await userService.getProfile(token);
-      setUser(data);
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -141,11 +115,11 @@ export default function AccountPage() {
         >
           <Box sx={{ mt: 1, mb: 4 }}>
             <AccountCircleRoundedIcon
-              sx={{ fontSize: 90, color: "secondary.light" }}
+              sx={{ fontSize: 90, color: "primary.light" }}
             />
 
             <Typography component="h1" variant="h5">
-              Acount
+              Account
             </Typography>
           </Box>
 
@@ -173,11 +147,8 @@ export default function AccountPage() {
                     id="user_first_name"
                     label="First Name"
                     autoFocus
-                    value={editProfile ? formValues.user_first_name : `${user.user_first_name}`}
+                    value={formValues.user_first_name}
                     onChange={handleChange}
-                    InputProps={{
-                      readOnly: !editProfile,
-                    }}
                   />
                   <TextField
                     required
@@ -186,11 +157,8 @@ export default function AccountPage() {
                     label="Last Name"
                     name="user_last_name"
                     autoComplete="family-name"
-                    value={editProfile ? formValues.user_last_name : `${user.user_last_name}`}
+                    value={formValues.user_last_name}
                     onChange={handleChange}
-                    InputProps={{
-                      readOnly: !editProfile,
-                    }}
                   />
                   <TextField
                     required
@@ -199,11 +167,8 @@ export default function AccountPage() {
                     label="Email Address"
                     name="email"
                     autoComplete="email"
-                    value={editProfile ? formValues.email : `${user.email}`}
+                    value={formValues.email}
                     onChange={handleChange}
-                    InputProps={{
-                      readOnly: !editProfile,
-                    }}
                   />
                 </Stack>
               </Grid>
@@ -211,6 +176,29 @@ export default function AccountPage() {
               <Grid item xs={12} sm={6}>
                 <Stack direction="column" spacing={2}>
                   <TextField
+                    fullWidth
+                    id="birthday"
+                    label="Birthdate"
+                    name="birthday"
+                    autoComplete="birtday"
+                    value={formValues.birthday}
+                    onChange={handleChange}
+                    InputProps={{
+                      inputProps: {
+                        type: "date",
+                      },
+                    }}
+                  />
+                  <TextField
+                    fullWidth
+                    id="phone_number"
+                    label="Birthdate"
+                    name="phone_number"
+                    autoComplete="birtday"
+                    value={formValues.phone_number}
+                    onChange={handleChange}
+                  />
+                  {/* <TextField
                     required
                     fullWidth
                     name="password"
@@ -219,7 +207,6 @@ export default function AccountPage() {
                     id="password"
                     autoComplete="new-password"
                     InputProps={{
-                      readOnly: !editProfile,
                       endAdornment: (
                         <InputAdornment position="end">
                           <IconButton
@@ -243,7 +230,6 @@ export default function AccountPage() {
                     id="verify-password"
                     autoComplete="new-password"
                     InputProps={{
-                      readOnly: !editProfile,
                       endAdornment: (
                         <InputAdornment position="end">
                           <IconButton
@@ -257,26 +243,31 @@ export default function AccountPage() {
                         </InputAdornment>
                       ),
                     }}
-                  />
+                  /> */}
                 </Stack>
               </Grid>
             </Grid>
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-              <Button
-                type={editProfile ? "button" : "submit"}
-                variant="contained"
-                startIcon={
-                  editProfile ? <SaveRoundedIcon /> : <EditRoundedIcon />
-                }
-                onClick={handleClickEditProfile}
-                sx={{ mt: 3 }}
-              >
-                {editProfile ? "Save changes" : "Edit"}
-              </Button>
-            </Box>
+            <Grid>
+              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <NavLink style={{ textDecoration: "none" }} to="/users/profile">
+                  <Button type="button" variant="contained" sx={{ mt: 3 }}>
+                    Cancel
+                  </Button>
+                </NavLink>
+                <Button
+                  type="button"
+                  variant="contained"
+                  startIcon={<SaveRoundedIcon />}
+                  sx={{ mt: 3 }}
+                >
+                  Apply changes
+                </Button>
+              </Box>
+            </Grid>
           </Box>
         </Box>
       </Container>
     </ThemeProvider>
   );
 }
+export default AccountPage;

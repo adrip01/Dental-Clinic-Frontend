@@ -11,6 +11,7 @@ import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
 import AdminPage from "./pages/AdminPage";
 import AccountPage from "./pages/AccountPage";
+import MyAppointmentsPage from "./pages/MyAppointmentsPage";
 
 export default function Router() {
   return (
@@ -22,6 +23,7 @@ export default function Router() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/users/profile" element={<ProfilePage />} />
         <Route path="/users/account" element={<AccountPage />} />
+        <Route path="/users/my-appointments" element={<MyAppointmentsPage />} />
         <Route path="/404" element={<Page404 />} />
         <Route path="*" element={<Navigate to="/404" />} />
       </Routes>

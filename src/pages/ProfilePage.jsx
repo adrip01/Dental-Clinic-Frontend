@@ -14,7 +14,6 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import SchoolIcon from "@mui/icons-material/School";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PhoneIcon from '@mui/icons-material/Phone';

@@ -15,7 +15,6 @@ import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
 import { NavLink } from "react-router-dom";
 import { Divider } from "@mui/material";
 
-
 import "./ResponsiveAppBar.module.scss";
 import { updateAuthStateLogout } from "../../../features/authentication/updateAuthState";
 import { useSelector } from "react-redux";
@@ -34,7 +33,7 @@ const pages = [
 ];
 const settings = [
   { title: "Profile", path: "/users/profile", handle: null },
-  { title: "Account", path: "/users/account" },
+  { title: "Appointments", path: "/users/my-appointments" },
   { title: "Logout", path: "/", handle: handleLogout },
 ];
 
