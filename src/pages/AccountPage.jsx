@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 
 // @MUI
 import {
+  Alert,
+  AlertTitle,
   Avatar,
   Box,
   Button,
@@ -50,6 +52,8 @@ function AccountPage() {
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [formValues, setFormValues] = useState(initialFormValues);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
 
   // glogal state hooks
   const token = useSelector((state) => state.auth.token);
@@ -102,8 +106,42 @@ function AccountPage() {
     }
   };
 
+  const saveProfile = async (user) => {
+    setIsLoading(true);
+    try {
+      const data = await userService.saveProfile(token, user);
+      setUser(data.results);
+      console.log(data.results);
+      setSuccess(true);
+      setTimeout(dismissAlert, 5000);
+    } catch (error) {
+      console.log(error);
+      setError(error.response.data.message);
+      setTimeout(dismissAlert, 5000);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const dismissAlert = () => {
+    setError(null);
+    setSuccess(false);
+  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
+      {error && (
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          {error}
+        </Alert>
+      )}
+      {success && (
+        <Alert severity="success">
+          <AlertTitle>Succes</AlertTitle>
+          Changes applied successfully!
+        </Alert>
+      )}
       <Container component="main" maxWidth="md">
         <CssBaseline />
 
@@ -192,58 +230,12 @@ function AccountPage() {
                   <TextField
                     fullWidth
                     id="phone_number"
-                    label="Birthdate"
+                    label="Phone Number"
                     name="phone_number"
                     autoComplete="birtday"
                     value={formValues.phone_number}
                     onChange={handleChange}
                   />
-                  {/* <TextField
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type={showPassword ? "text" : "password"}
-                    id="password"
-                    autoComplete="new-password"
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                  <TextField
-                    required
-                    fullWidth
-                    name="verify-password"
-                    label="Password"
-                    type={showPassword ? "text" : "password"}
-                    id="verify-password"
-                    autoComplete="new-password"
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  /> */}
                 </Stack>
               </Grid>
             </Grid>
@@ -259,6 +251,9 @@ function AccountPage() {
                   variant="contained"
                   startIcon={<SaveRoundedIcon />}
                   sx={{ mt: 3 }}
+                  onClick={() => {
+                    saveProfile(formValues);
+                  }}
                 >
                   Apply changes
                 </Button>

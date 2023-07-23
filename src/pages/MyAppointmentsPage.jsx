@@ -7,15 +7,23 @@ import Paper from "@mui/material/Paper";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 import userService from "../_services/userService";
+import { NavLink } from "react-router-dom";
 
 function MyAppointmentsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const token = useSelector((state) => state.auth.token);
 
   const [appointments, setAppointments] = useState([]);
-
+  const [openConfirmation, setOpenConfirmation] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
 
   useEffect(() => {
     getAppointments();
@@ -34,7 +42,24 @@ function MyAppointmentsPage() {
     }
   };
 
+  const handleDeleteRow = (id) => {
+    setDeleteId(id);
+    setOpenConfirmation(true);
+  };
 
+  const handleConfirmDelete = async () => {
+    setOpenConfirmation(false);
+    try {
+      await userService.deleteAppointment(token, deleteId);
+      getAppointments();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setOpenConfirmation(false);
+  };
 
   const columns = [
     {
@@ -87,6 +112,13 @@ function MyAppointmentsPage() {
 
   return (
     <Box style={{ height: 400, width: "100%" }}>
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <NavLink style={{ textDecoration: "none" }} to="/users/new-appointment">
+          <Button type="button" variant="contained" sx={{ m: 3 }}>
+            New appointment
+          </Button>
+        </NavLink>
+      </Box>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <DataGrid
           rows={appointments}
@@ -101,6 +133,27 @@ function MyAppointmentsPage() {
           getRowId={(row) => row.id}
         />
       </Paper>
+      <Dialog
+        open={openConfirmation}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Delete this appointment?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete this appointment? There's no going
+            back if you do.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancelDelete}>Cancel</Button>
+          <Button onClick={handleConfirmDelete} autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }
