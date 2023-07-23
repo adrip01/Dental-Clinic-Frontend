@@ -65,27 +65,27 @@ function MyAppointmentsPage() {
     {
       field: "id",
       headerName: "ID",
-      width: 70,
+      width: 190,
     },
-    { field: "customer_id", headerName: "Customer", width: 130 },
-    { field: "doctor_id", headerName: "Doctor", width: 130 },
+    { field: "customer_id", headerName: "Customer", width: 210 },
+    { field: "doctor_id", headerName: "Doctor", width: 210 },
     {
       field: "date",
       headerName: "Date",
       type: "date",
-      width: 120,
+      width: 205,
       valueFormatter: (params) => format(new Date(params.value), "yyyy-MM-dd"),
     },
     {
       field: "time",
       headerName: "Hour",
-      width: 120,
+      width: 205,
     },
 
     {
       field: "editIcon",
       headerName: "Edit",
-      width: 60,
+      width: 205,
       renderCell: (params) => (
         <Box>
           <EditIcon
@@ -98,7 +98,7 @@ function MyAppointmentsPage() {
     {
       field: "deleteIcon",
       headerName: "Delete",
-      width: 60,
+      width: 205,
       renderCell: (params) => (
         <Box>
           <DeleteIcon
@@ -112,20 +112,19 @@ function MyAppointmentsPage() {
 
   return (
     <Box style={{ height: 400, width: "100%" }}>
-      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <NavLink style={{ textDecoration: "none" }} to="/users/new-appointment">
-          <Button type="button" variant="contained" sx={{ m: 3 }}>
-            New appointment
-          </Button>
-        </NavLink>
-      </Box>
+      <NavLink style={{ textDecoration: "none" }} to="/users/new-appointment">
+        <Button type="button" variant="contained" sx={{ m: 3 }}>
+          New appointment
+        </Button>
+      </NavLink>
+
       <Paper sx={{ width: "100%", mb: 2 }}>
         <DataGrid
           rows={appointments}
           columns={columns}
           initialState={{
             pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
+              paginationModel: { page: 0, pageSize: 10 },
             },
           }}
           pageSizeOptions={[5, 10, 25]}

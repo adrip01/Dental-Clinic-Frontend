@@ -117,7 +117,7 @@ function AccountPage() {
     } catch (error) {
       console.log(error);
       setError(error.response.data.message);
-      setTimeout(dismissAlert, 5000);
+      setTimeout(dismissAlert, 3000);
     } finally {
       setIsLoading(false);
     }
@@ -142,126 +142,138 @@ function AccountPage() {
           Changes applied successfully!
         </Alert>
       )}
-      <Container component="main" maxWidth="md">
-        <CssBaseline />
-
-        <Box
-          sx={{
-            marginTop: 8,
-            alignItems: "flex-start",
-          }}
-        >
-          <Box sx={{ mt: 1, mb: 4 }}>
-            <AccountCircleRoundedIcon
-              sx={{ fontSize: 90, color: "primary.light" }}
-            />
-
-            <Typography component="h1" variant="h5">
-              Account
-            </Typography>
-          </Box>
+      <Box
+        sx={{
+          backgroundColor: "#E3E3E3",
+          minHeight: "100vh",
+          display: "flex",
+        }}
+      >
+        <Container component="main" maxWidth="md">
+          <CssBaseline />
 
           <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
             sx={{
-              mt: 5,
-              p: 3,
-              borderRadius: 4,
-              border: "1px solid #e8e8e8",
-              boxShadow:
-                "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+              marginTop: 8,
+              alignItems: "flex-start",
             }}
           >
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <Stack direction="column" spacing={2}>
-                  <TextField
-                    autoComplete="given-name"
-                    name="user_first_name"
-                    required
-                    fullWidth
-                    id="user_first_name"
-                    label="First Name"
-                    autoFocus
-                    value={formValues.user_first_name}
-                    onChange={handleChange}
-                  />
-                  <TextField
-                    required
-                    fullWidth
-                    id="user_last_name"
-                    label="Last Name"
-                    name="user_last_name"
-                    autoComplete="family-name"
-                    value={formValues.user_last_name}
-                    onChange={handleChange}
-                  />
-                  <TextField
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    value={formValues.email}
-                    onChange={handleChange}
-                  />
-                </Stack>
-              </Grid>
+            <Box sx={{ mt: 1, mb: 4 }}>
+              <AccountCircleRoundedIcon
+                sx={{ fontSize: 90, color: "primary.light" }}
+              />
 
-              <Grid item xs={12} sm={6}>
-                <Stack direction="column" spacing={2}>
-                  <TextField
-                    fullWidth
-                    id="birthday"
-                    label="Birthdate"
-                    name="birthday"
-                    autoComplete="birtday"
-                    value={formValues.birthday}
-                    onChange={handleChange}
-                    InputProps={{
-                      inputProps: {
-                        type: "date",
-                      },
-                    }}
-                  />
-                  <TextField
-                    fullWidth
-                    id="phone_number"
-                    label="Phone Number"
-                    name="phone_number"
-                    autoComplete="birtday"
-                    value={formValues.phone_number}
-                    onChange={handleChange}
-                  />
-                </Stack>
+              <Typography component="h1" variant="h5">
+                Account
+              </Typography>
+            </Box>
+
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{
+                mt: 5,
+                p: 3,
+                borderRadius: 4,
+                border: "1px solid #e8e8e8",
+                boxShadow:
+                  "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+                backgroundColor: "#FBFBFD",
+              }}
+            >
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <Stack direction="column" spacing={2}>
+                    <TextField
+                      autoComplete="given-name"
+                      name="user_first_name"
+                      required
+                      fullWidth
+                      id="user_first_name"
+                      label="First Name"
+                      autoFocus
+                      value={formValues.user_first_name}
+                      onChange={handleChange}
+                    />
+                    <TextField
+                      required
+                      fullWidth
+                      id="user_last_name"
+                      label="Last Name"
+                      name="user_last_name"
+                      autoComplete="family-name"
+                      value={formValues.user_last_name}
+                      onChange={handleChange}
+                    />
+                    <TextField
+                      required
+                      fullWidth
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      autoComplete="email"
+                      value={formValues.email}
+                      onChange={handleChange}
+                    />
+                  </Stack>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <Stack direction="column" spacing={2}>
+                    <TextField
+                      fullWidth
+                      id="birthday"
+                      label="Birthdate"
+                      name="birthday"
+                      autoComplete="birtday"
+                      value={formValues.birthday}
+                      onChange={handleChange}
+                      InputProps={{
+                        inputProps: {
+                          type: "date",
+                        },
+                      }}
+                    />
+                    <TextField
+                      fullWidth
+                      id="phone_number"
+                      label="Phone Number"
+                      name="phone_number"
+                      autoComplete="birtday"
+                      value={formValues.phone_number}
+                      onChange={handleChange}
+                    />
+                  </Stack>
+                </Grid>
               </Grid>
-            </Grid>
-            <Grid>
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <NavLink style={{ textDecoration: "none" }} to="/users/profile">
-                  <Button type="button" variant="contained" sx={{ mt: 3 }}>
-                    Cancel
+              <Grid>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <NavLink
+                    style={{ textDecoration: "none" }}
+                    to="/users/profile"
+                  >
+                    <Button type="button" variant="contained" sx={{ mt: 3 }}>
+                      Cancel
+                    </Button>
+                  </NavLink>
+                  <Button
+                    type="button"
+                    variant="contained"
+                    startIcon={<SaveRoundedIcon />}
+                    sx={{ mt: 3 }}
+                    onClick={() => {
+                      saveProfile(formValues);
+                    }}
+                  >
+                    Apply changes
                   </Button>
-                </NavLink>
-                <Button
-                  type="button"
-                  variant="contained"
-                  startIcon={<SaveRoundedIcon />}
-                  sx={{ mt: 3 }}
-                  onClick={() => {
-                    saveProfile(formValues);
-                  }}
-                >
-                  Apply changes
-                </Button>
-              </Box>
-            </Grid>
+                </Box>
+              </Grid>
+            </Box>
           </Box>
-        </Box>
-      </Container>
+        </Container>
+      </Box>
     </ThemeProvider>
   );
 }

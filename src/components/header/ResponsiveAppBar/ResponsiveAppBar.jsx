@@ -177,7 +177,7 @@ function ResponsiveAppBar() {
                     bgcolor: "primary.dark",
                   }}
                 >
-                  Iniciar sesión
+                  Login
                 </Button>
               </NavLink>
 
@@ -192,7 +192,7 @@ function ResponsiveAppBar() {
                     bgcolor: "primary.dark",
                   }}
                 >
-                  Nuevo usuario
+                  Register
                 </Button>
               </NavLink>
             </Box>

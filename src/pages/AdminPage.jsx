@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Box from '@mui/material/Box';
+import Box from "@mui/material/Box";
 
 import userService from "../_services/userService";
 
@@ -45,25 +45,25 @@ export default function AdminPage() {
     {
       field: "role",
       headerName: "Role",
-      width: 130,
+      width: 200,
       valueGetter: (params) => params.value.role,
       valueFormatter: (params) => params.value.role,
     },
-    { field: "user_first_name", headerName: "First name", width: 130 },
-    { field: "user_last_name", headerName: "Last name", width: 130 },
+    { field: "user_first_name", headerName: "First name", width: 200 },
+    { field: "user_last_name", headerName: "Last name", width: 200 },
     {
       field: "birthday",
       headerName: "Birthdate",
       type: "date",
-      width: 120,
+      width: 200,
       valueFormatter: (params) => format(new Date(params.value), "yyyy-MM-dd"),
     },
     { field: "email", headerName: "Email", width: 200 },
-    { field: "phone_number", headerName: "Phone Number", width: 160 },
+    { field: "phone_number", headerName: "Phone Number", width: 200 },
     {
       field: "editIcon",
       headerName: "Edit",
-      width: 60,
+      width: 90,
       renderCell: (params) => (
         <Box>
           <EditIcon
@@ -76,7 +76,7 @@ export default function AdminPage() {
     {
       field: "deleteIcon",
       headerName: "Delete",
-      width: 60,
+      width: 90,
       renderCell: (params) => (
         <Box>
           <DeleteIcon
