@@ -6,7 +6,10 @@ const initialState = {
   userInfo: {
     id: null,
     name: null,
+    lastName: null,
     role: null,
+    customerId: null,
+    doctorId: null,
   },
 
   token: null,

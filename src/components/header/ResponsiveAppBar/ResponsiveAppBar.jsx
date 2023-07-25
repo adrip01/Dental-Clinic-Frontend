@@ -24,6 +24,12 @@ const handleLogout = () => {
   updateAuthStateLogout();
 };
 
+//codigo fidel para diferenciar roles y tener varios diseños segun role
+// const profilePath = {
+//   admin: "/profile/admin",
+//   student: "/profile/student"
+// };
+
 const pages = [
   { title: "Home", path: "/" },
   // { title: "Tratamientos", path: "/" },

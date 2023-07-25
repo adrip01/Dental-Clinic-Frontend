@@ -78,10 +78,11 @@ userService.deleteAppointment = async (token, id) => {
   return response.data;
 };
 
-userService.createAppointment = async (token) => {
+userService.createAppointment = async (token, data) => {
   const options = {
     method: "POST",
     url: `${global.BASE_API_URL}/users/create-appointment`,
+    data: data,
     headers: {
       accept: "application/json",
       Authorization: `Bearer ${token}`,

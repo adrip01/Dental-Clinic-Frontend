@@ -10,7 +10,10 @@ export const updateAuthStateLogin = (token) => {
     setUserInfo({
       id: myDecodedToken.userId,
       name: myDecodedToken.userName,
+      lastName: myDecodedToken.userLastName,
       role: myDecodedToken.userRole,
+      customerId: myDecodedToken.customerId,
+      doctorId: myDecodedToken.doctorId,
     })
   );
   store.dispatch(setToken(token));

@@ -33,7 +33,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 //
 import userService from "../_services/userService";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import {
   DatePicker,
@@ -45,11 +45,11 @@ import {
 
 const defaultTheme = createTheme();
 
-const initialFormValues = {
+let initialFormValues = {
   customer_id: "",
   doctor_id: "",
-  date: null,
-  time: null,
+  date: "",
+  time: "",
 };
 
 function NewAppointmentPage() {
@@ -59,9 +59,38 @@ function NewAppointmentPage() {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
 
   // glogal state hooks
   const token = useSelector((state) => state.auth.token);
+  const userRole = useSelector((state) => state.auth.userInfo.role);
+  const userInfo = useSelector((state) => state.auth.userInfo);
+  const isAdmin = userRole == "admin";
+  const isCustomer = userRole == "user";
+  const isDoctor = userRole == "doctor";
+
+  if (isCustomer) {
+    initialFormValues = {
+      customer_id: userInfo.customerId,
+      doctor_id: "",
+      date: "",
+      time: "",
+    };
+  } else if (isDoctor) {
+    initialFormValues = {
+      customer_id: "",
+      doctor_id: userInfo.doctorId,
+      date: "",
+      time: "",
+    };
+  } else {
+    initialFormValues = {
+      customer_id: "",
+      doctor_id: "",
+      date: "",
+      time: "",
+    };
+  }
 
   // useEffect(() => {
   //   getProfile();
@@ -82,6 +111,7 @@ function NewAppointmentPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
     console.log({
       customer_id: data.get("customer_id"),
       doctor_id: data.get("doctor_id"),
@@ -90,22 +120,9 @@ function NewAppointmentPage() {
     });
   };
 
-  // const getProfile = async () => {
-  //   setIsLoading(true);
-  //   try {
-  //     const data = await userService.getProfile(token);
-  //     setUser(data.results);
-  //     setFormValues({
-  //       customer_id: data.results.customer_id,
-  //       doctor_id: data.results.doctor_id,
-  //     });
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
+  const redirect = () => {
+    navigate("/users/my-appointments");
+  };
 
   const createAppointment = async () => {
     setIsLoading(true);
@@ -114,10 +131,14 @@ function NewAppointmentPage() {
       console.log(data.results);
       setSuccess(true);
       setTimeout(dismissAlert, 5000);
+      setTimeout(redirect, 5000);
     } catch (error) {
       console.log(error);
       setError(error.response.data.message);
-      setTimeout(dismissAlert, 5000);
+      // console.log("userInfo:", userInfo);
+      // console.log("initialFormValues:", initialFormValues);
+      // console.log("formValues:", formValues);
+      // setTimeout(dismissAlert, 5000);
     } finally {
       setIsLoading(false);
     }
@@ -174,19 +195,19 @@ function NewAppointmentPage() {
               <Grid item xs={12} sm={6}>
                 <Stack direction="column" spacing={2}>
                   <Select
-                    autoComplete="given-name"
-                    name="customer_id"
                     required
                     fullWidth
                     id="customer_id"
                     label="Customer"
-                    autoFocus
+                    name="customer_id"
+                    autoComplete="given-name"
                     value={formValues.customer_id}
                     onChange={handleChange}
                   >
-                    <MenuItem value={10}>Cliente</MenuItem>
+                    <MenuItem value={0}>None</MenuItem>
+                    <MenuItem value={8}>Terrill</MenuItem>
                   </Select>
-                  <TextField
+                  <Select
                     required
                     fullWidth
                     id="doctor_id"
@@ -195,13 +216,15 @@ function NewAppointmentPage() {
                     autoComplete="family-name"
                     value={formValues.doctor_id}
                     onChange={handleChange}
-                  />
+                  >
+                    <MenuItem value={1}>Manuel</MenuItem>
+                  </Select>
                 </Stack>
               </Grid>
 
               <Grid item xs={12} sm={6}>
                 <Stack direction="column" spacing={2}>
-                  {/* <TextField
+                  <TextField
                     required
                     fullWidth
                     id="date"
@@ -229,7 +252,7 @@ function NewAppointmentPage() {
                         type: "time",
                       },
                     }}
-                  /> */}
+                  />
                 </Stack>
               </Grid>
             </Grid>
