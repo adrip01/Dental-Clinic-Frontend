@@ -1,4 +1,4 @@
-# Welcome to my frontend app  
+# Welcome to my frontend app
 
 <details>
   <summary>Contenido 📝</summary>
@@ -8,7 +8,7 @@
     <!-- <li><a href="#deploy-🚀">Deploy</a></li> -->
     <li><a href="#stack">Stack</a></li>
     <li><a href="#instalación-en-local">Instalación</a></li>
-    <li><a href="#vistas">Vistas</a></li>
+    <!-- <li><a href="#vistas">Vistas</a></li> -->
     <!-- <li><a href="#futuras-funcionalidades">Futuras funcionalidades</a></li> -->
     <li><a href="#webgrafia">Webgrafia</a></li>
     <li><a href="#contacto">Contacto</a></li>
@@ -16,17 +16,20 @@
 </details>
 
 ## Objetivo 🎯
+
 Este proyecto requería conexión a una API funcional y usar react para crear una web.
 
 ## Sobre el proyecto 🔎
-Se trata del frontend web de una clinica dental. Tanto los clientes como los trabajadores pueden registrar su usuario y acceder a los servicios de la app, como consultar sus citas, crear, modificar o eliminarlas y cambiar sus datos de contacto.   
-  
+
+Se trata del frontend web de una clinica dental. Tanto los clientes como los trabajadores pueden registrar su usuario y acceder a los servicios de la app, como consultar sus citas, crear, modificar o eliminarlas y cambiar sus datos de contacto.
+
 <!-- ## Deploy 🚀
 <div align="center">
     <a href="https://www.google.com"><strong>Url a producción </strong></a>🚀🚀🚀
 </div> -->
 
 ## Stack
+
 <div align="center">
 <a href="https://www.reactjs.com/">
     <img src= "https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
@@ -43,30 +46,31 @@ Se trata del frontend web de una clinica dental. Tanto los clientes como los tra
  </div>
 
 ## Instalación en local
+
 1. Clonar el repositorio
-2. ` $ npm install `
-3. ``` $ npm run dev ```
+2. `$ npm install`
+3. `$ npm run dev`
 
-
-## Vistas
+<!-- ## Vistas
 Landing
-<img src="">  
+<img src="">
 Register
 <img src="">
 Login
 <img src="">
 Profile
-<img src="">
-
+<img src=""> -->
 
 <!-- ## Futuras funcionalidades
-✅ Vista actualizar rutinas  
-⬜ Filtar por nombre de rutina  
-⬜ Validaciones de campos en crear rutina  
+✅ Vista actualizar rutinas
+⬜ Filtar por nombre de rutina
+⬜ Validaciones de campos en crear rutina
 ⬜ ...   -->
 
 ## Webgrafia:
+
 Para conseguir mi objetivo he recopilado información de:
+
 - https://mui.com/material-ui/getting-started/
 - https://es.react.dev/learn
 - https://redux.js.org/introduction/getting-started
@@ -74,5 +78,6 @@ Para conseguir mi objetivo he recopilado información de:
 ## Contacto
 
 <a href = "mailto:adrianapardo1998@gmail.com"><img src="https://img.shields.io/badge/Gmail-C6362C?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a>
-<a href="https://www.linkedin.com/in/adriana-pardo-diez/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
+<a href="https://www.linkedin.com/in/adriana-pardo-diez/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a>
+
 </p>
