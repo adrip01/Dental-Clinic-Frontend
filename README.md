@@ -10,7 +10,6 @@
     <li><a href="#instalación-en-local">Instalación</a></li>
     <li><a href="#vistas">Vistas</a></li>
     <!-- <li><a href="#futuras-funcionalidades">Futuras funcionalidades</a></li> -->
-    <li><a href="#licencia">Licencia</a></li>
     <li><a href="#webgrafia">Webgrafia</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ol>
@@ -65,11 +64,6 @@ Profile
 ⬜ Filtar por nombre de rutina  
 ⬜ Validaciones de campos en crear rutina  
 ⬜ ...   -->
-
-
-
-## Licencia
-Este proyecto se encuentra bajo licencia de "Adriana Pardo"
 
 ## Webgrafia:
 Para conseguir mi objetivo he recopilado información de:
