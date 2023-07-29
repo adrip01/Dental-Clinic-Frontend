@@ -5,19 +5,11 @@ import { useSelector } from "react-redux";
 import {
   Alert,
   AlertTitle,
-  Avatar,
   Box,
   Button,
   Container,
   CssBaseline,
   Grid,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   MenuItem,
   Select,
   Stack,
@@ -26,20 +18,9 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
-import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import SaveRoundedIcon from "@mui/icons-material/SaveRounded";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-
 //
 import userService from "../_services/userService";
 import { NavLink, useNavigate } from "react-router-dom";
-import { format } from "date-fns";
-import {
-  DatePicker,
-  LocalizationProvider,
-  TimePicker,
-} from "@mui/x-date-pickers";
 
 // ----------------------------------------------------------------------
 
@@ -60,6 +41,8 @@ function NewAppointmentPage() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
+  const [customers, setCustomers] = useState([]);
+  const [doctors, setDoctors] = useState([]);
 
   // glogal state hooks
   const token = useSelector((state) => state.auth.token);
@@ -69,32 +52,59 @@ function NewAppointmentPage() {
   const isCustomer = userRole == "user";
   const isDoctor = userRole == "doctor";
 
-  if (isCustomer) {
-    initialFormValues = {
-      customer_id: userInfo.customerId,
-      doctor_id: "",
-      date: "",
-      time: "",
-    };
-  } else if (isDoctor) {
-    initialFormValues = {
-      customer_id: "",
-      doctor_id: userInfo.doctorId,
-      date: "",
-      time: "",
-    };
-  } else {
-    initialFormValues = {
-      customer_id: "",
-      doctor_id: "",
-      date: "",
-      time: "",
-    };
-  }
+  // console.log(userInfo);
 
-  // useEffect(() => {
-  //   getProfile();
-  // }, []);
+  useEffect(() => {
+    if (isCustomer) {
+      setFormValues((oldState) => ({
+        ...oldState,
+        customer_id: userInfo.customerId,
+      }));
+    } else if (isDoctor) {
+      setFormValues((oldState) => ({
+        ...oldState,
+        doctor_id: userInfo.doctorId,
+      }));
+    }
+    // console.log(formValues);
+  }, []);
+
+  useEffect(() => {
+    if (isCustomer) {
+      getDoctors();
+    } else if (isDoctor) {
+      getCustomers();
+    } else if (isAdmin) {
+      getCustomers();
+      getDoctors();
+    }
+  }, []);
+
+  const getCustomers = async () => {
+    setIsLoading(true);
+    try {
+      const data = await userService.getCustomers(token);
+      setCustomers(data.customers);
+      console.log(data.customers);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const getDoctors = async () => {
+    setIsLoading(true);
+    try {
+      const data = await userService.getDoctors(token);
+      setDoctors(data.doctors);
+      console.log(data.doctors);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // handlers
 
@@ -128,17 +138,17 @@ function NewAppointmentPage() {
     setIsLoading(true);
     try {
       const data = await userService.createAppointment(token, formValues);
-      console.log(data.results);
+      console.log(data);
       setSuccess(true);
       setTimeout(dismissAlert, 5000);
       setTimeout(redirect, 5000);
     } catch (error) {
       console.log(error);
       setError(error.response.data.message);
-      // console.log("userInfo:", userInfo);
-      // console.log("initialFormValues:", initialFormValues);
-      // console.log("formValues:", formValues);
-      // setTimeout(dismissAlert, 5000);
+      console.log("userInfo:", userInfo);
+      console.log("initialFormValues:", initialFormValues);
+      console.log("formValues:", formValues);
+      setTimeout(dismissAlert, 5000);
     } finally {
       setIsLoading(false);
     }
@@ -194,31 +204,75 @@ function NewAppointmentPage() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <Stack direction="column" spacing={2}>
-                  <Select
-                    required
-                    fullWidth
-                    id="customer_id"
-                    label="Customer"
-                    name="customer_id"
-                    autoComplete="given-name"
-                    value={formValues.customer_id}
-                    onChange={handleChange}
-                  >
-                    <MenuItem value={0}>None</MenuItem>
-                    <MenuItem value={8}>Terrill</MenuItem>
-                  </Select>
-                  <Select
-                    required
-                    fullWidth
-                    id="doctor_id"
-                    label="Doctor"
-                    name="doctor_id"
-                    autoComplete="family-name"
-                    value={formValues.doctor_id}
-                    onChange={handleChange}
-                  >
-                    <MenuItem value={1}>Manuel</MenuItem>
-                  </Select>
+                  {isCustomer ? (
+                    <Select
+                      required
+                      fullWidth
+                      id="customer_id"
+                      label="Customer"
+                      name="customer_id"
+                      autoComplete="given-name"
+                      value={formValues.customer_id}
+                      onChange={handleChange}
+                      disabled
+                    >
+                      <MenuItem value={userInfo.customerId}>
+                        {userInfo.name} {userInfo.lastName}
+                      </MenuItem>
+                    </Select>
+                  ) : (
+                    <Select
+                      required
+                      fullWidth
+                      id="customer_id"
+                      label="Customer"
+                      name="customer_id"
+                      autoComplete="given-name"
+                      value={formValues.customer_id}
+                      onChange={handleChange}
+                    >
+                      {customers.map((customer) => (
+                        <MenuItem key={customer.id} value={customer.id}>
+                          {`${customer.user.user_first_name} ${customer.user.user_last_name}`}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  )}
+
+                  {isDoctor ? (
+                    <Select
+                      required
+                      fullWidth
+                      id="doctor_id"
+                      label="Doctor"
+                      name="doctor_id"
+                      autoComplete="family-name"
+                      value={formValues.doctor_id}
+                      onChange={handleChange}
+                      disabled
+                    >
+                      <MenuItem value={userInfo.doctorId}>
+                        {userInfo.name} {userInfo.lastName}
+                      </MenuItem>
+                    </Select>
+                  ) : (
+                    <Select
+                      required
+                      fullWidth
+                      id="doctor_id"
+                      label="Doctor"
+                      name="doctor_id"
+                      autoComplete="family-name"
+                      value={formValues.doctor_id}
+                      onChange={handleChange}
+                    >
+                      {doctors.map((doctor) => (
+                        <MenuItem key={doctor.id} value={doctor.id}>
+                          {`${doctor.user.user_first_name} ${doctor.user.user_last_name} (${doctor.speciality.speciality})`}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  )}
                 </Stack>
               </Grid>
 
@@ -269,7 +323,6 @@ function NewAppointmentPage() {
                 <Button
                   type="button"
                   variant="contained"
-                  startIcon={<SaveRoundedIcon />}
                   sx={{ mt: 3 }}
                   onClick={() => {
                     createAppointment(formValues);

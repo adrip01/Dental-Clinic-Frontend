@@ -15,7 +15,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import userService from "../_services/userService";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function MyAppointmentsPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,10 +23,25 @@ function MyAppointmentsPage() {
 
   const [appointments, setAppointments] = useState([]);
   const [openConfirmation, setOpenConfirmation] = useState(false);
-  const [deleteId, setDeleteId] = useState(null);
+  const [rowId, setRowId] = useState(null);
+  const navigate = useNavigate();
+
+  // glogal state hooks
+  const userRole = useSelector((state) => state.auth.userInfo.role);
+  const userInfo = useSelector((state) => state.auth.userInfo);
+  const isAdmin = userRole == "admin";
+  const isCustomer = userRole == "user";
+  const isDoctor = userRole == "doctor";
 
   useEffect(() => {
-    getAppointments();
+    if (isCustomer) {
+      getAppointments();
+    } else if (isDoctor) {
+      getAppointments();
+      getAllAppointments();
+    } else if (isAdmin) {
+      getAllAppointments()
+    }
   }, []);
 
   const getAppointments = async () => {
@@ -42,15 +57,28 @@ function MyAppointmentsPage() {
     }
   };
 
+  const getAllAppointments = async () => {
+    setIsLoading(true);
+    try {
+      const data = await userService.getAllAppointments(token);
+      setAppointments(data.appointments);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleDeleteRow = (id) => {
-    setDeleteId(id);
+    setRowId(id);
     setOpenConfirmation(true);
   };
 
   const handleConfirmDelete = async () => {
     setOpenConfirmation(false);
     try {
-      await userService.deleteAppointment(token, deleteId);
+      await userService.deleteAppointment(token, rowId);
       getAppointments();
     } catch (error) {
       console.log(error);
@@ -59,6 +87,11 @@ function MyAppointmentsPage() {
 
   const handleCancelDelete = () => {
     setOpenConfirmation(false);
+  };
+
+  const handleEditRow = (id) => {
+    setRowId(id);
+    navigate("/users/edit-appointment");
   };
 
   const columns = [

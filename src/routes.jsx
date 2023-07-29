@@ -13,6 +13,7 @@ import AdminPage from "./pages/AdminPage";
 import AccountPage from "./pages/AccountPage";
 import MyAppointmentsPage from "./pages/MyAppointmentsPage";
 import NewAppointmentPage from "./pages/NewAppointmentPage";
+import EditAppointmentPage from "./pages/EditAppointmentPage";
 
 export default function Router() {
   return (
@@ -26,6 +27,10 @@ export default function Router() {
         <Route path="/users/account" element={<AccountPage />} />
         <Route path="/users/my-appointments" element={<MyAppointmentsPage />} />
         <Route path="/users/new-appointment" element={<NewAppointmentPage />} />
+        <Route
+          path="/users/edit-appointment"
+          element={<EditAppointmentPage />}
+        />
         <Route path="/404" element={<Page404 />} />
         <Route path="*" element={<Navigate to="/404" />} />
       </Routes>

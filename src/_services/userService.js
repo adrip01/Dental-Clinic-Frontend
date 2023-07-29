@@ -19,6 +19,34 @@ userService.getAll = async (token, page = 1) => {
   return response.data;
 };
 
+userService.getCustomers = async (token) => {
+  const options = {
+    method: "GET",
+    url: `${global.BASE_API_URL}/users/all-customers`,
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  //await sleep(2000); // TODO
+  const response = await axios.request(options);
+  return response.data;
+};
+
+userService.getDoctors = async (token) => {
+  const options = {
+    method: "GET",
+    url: `${global.BASE_API_URL}/users/all-doctors`,
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  //await sleep(2000); // TODO
+  const response = await axios.request(options);
+  return response.data;
+};
+
 userService.getProfile = async (token) => {
   const options = {
     method: "GET",
@@ -37,6 +65,20 @@ userService.getAppointments = async (token) => {
   const options = {
     method: "GET",
     url: `${global.BASE_API_URL}/users/user-appointments`,
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  //await sleep(2000); // TODO
+  const response = await axios.request(options);
+  return response.data;
+};
+
+userService.getAllAppointments = async (token) => {
+  const options = {
+    method: "GET",
+    url: `${global.BASE_API_URL}/users/all-appointments`,
     headers: {
       accept: "application/json",
       Authorization: `Bearer ${token}`,
@@ -82,6 +124,22 @@ userService.createAppointment = async (token, data) => {
   const options = {
     method: "POST",
     url: `${global.BASE_API_URL}/users/create-appointment`,
+    data: data,
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  // await sleep(2000); // TODO
+  const response = await axios.request(options);
+  return response.data;
+};
+
+userService.updateAppointment = async (token, data, id) => {
+  const options = {
+    method: "PUT",
+    url: `${global.BASE_API_URL}/users/update-appointment/${id}`,
     data: data,
     headers: {
       accept: "application/json",
