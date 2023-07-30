@@ -8,7 +8,8 @@
     <!-- <li><a href="#deploy-🚀">Deploy</a></li> -->
     <li><a href="#stack">Stack</a></li>
     <li><a href="#instalación-en-local">Instalación</a></li>
-    <!-- <li><a href="#vistas">Vistas</a></li> -->
+    <li><a href="#vistas">Vistas</a></li>
+    <li><a href="#credenciales">Credenciales</a></li>
     <!-- <li><a href="#futuras-funcionalidades">Futuras funcionalidades</a></li> -->
     <li><a href="#webgrafia">Webgrafia</a></li>
     <li><a href="#contacto">Contacto</a></li>
@@ -51,15 +52,54 @@ Se trata del frontend web de una clinica dental. Tanto los clientes como los tra
 2. `$ npm install`
 3. `$ npm run dev`
 
-<!-- ## Vistas
+## Vistas
+
 Landing
-<img src="">
+<img src="./public/img/home.png">
 Register
-<img src="">
+<img src="./public/img/SignUp.png">
 Login
-<img src="">
+<img src="./public/img/Login.png">
 Profile
-<img src=""> -->
+<img src="./public/img/Profile.png">
+Account
+<img src="./public/img/Account.png">
+My appointments
+<img src="./public/img/MyAppointments.png">
+New appointment
+<img src="./public/img/NewAppointment.png">
+
+## Credenciales
+
+<details>
+<summary>Credenciales</summary>
+
+- AUTH
+
+  - LOGIN
+
+  Como doctor:
+
+  ```js
+          email: manuel@coronado.com,
+          password: 12345678
+  ```
+
+  Como usuario:
+
+  ```js
+          email: terrill@hills.com,
+          password: 12345678
+  ```
+
+  Como admin:
+
+  ```js
+          email: admin@admin.com,
+          password: 12345678
+  ```
+
+  </details>
 
 <!-- ## Futuras funcionalidades
 ✅ Vista actualizar rutinas
