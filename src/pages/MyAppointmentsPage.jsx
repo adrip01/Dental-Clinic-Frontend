@@ -38,9 +38,9 @@ function MyAppointmentsPage() {
       getAppointments();
     } else if (isDoctor) {
       getAppointments();
-      getAllAppointments();
+      // getAllAppointments();
     } else if (isAdmin) {
-      getAllAppointments()
+      getAllAppointments();
     }
   }, []);
 
@@ -90,8 +90,13 @@ function MyAppointmentsPage() {
   };
 
   const handleEditRow = (id) => {
-    setRowId(id);
-    navigate("/users/edit-appointment");
+    if (id) {
+      setRowId(id);
+      console.log(id);
+      navigate(`/users/edit-appointment/${id}`);
+    } else {
+      console.log("Invalid appointment id");
+    }
   };
 
   const columns = [

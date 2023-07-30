@@ -131,7 +131,7 @@ export default function SignInSide() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Iniciar sesión
+              Sign in
             </Typography>
             <Box
               component="form"
@@ -179,16 +179,15 @@ export default function SignInSide() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Iniciar sesión
+                Sign in
               </Button>
               <Grid container justifyContent="center">
                 <Grid item>
                   <Link href="/register" variant="body2">
-                    {"¿No tiene cuenta? Crear una nueva"}
+                    {"Don't have an account? Sign up"}
                   </Link>
                 </Grid>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>

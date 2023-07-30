@@ -64,19 +64,19 @@ export default function SignUp() {
       const response = await authService.register(credentials);
       setError(null);
     } catch (error) {
-      // setError(error.response.data.message);
+      setError(error.response.data.message);
       console.log(error);
     }
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      {/* {error && (
+      {error && (
         <Alert severity="error">
           <AlertTitle>Error</AlertTitle>
           {error}
         </Alert>
-      )} */}
+      )}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -91,7 +91,7 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Crear cuenta
+            Sign up
           </Typography>
           <Box
             component="form"
@@ -107,7 +107,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="user_first_name"
-                  label="Nombre"
+                  label="Name"
                   autoFocus
                 />
               </Grid>
@@ -116,19 +116,11 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="user_last_name"
-                  label="Apellidos"
+                  label="Last name"
                   name="user_last_name"
                   autoComplete="family-name"
                 />
               </Grid>
-              {/* <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  id="birthday"
-                  label="Fecha de nacimiento"
-                  name="birthday"
-                />
-              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   required
@@ -164,15 +156,6 @@ export default function SignUp() {
                   }}
                 />
               </Grid>
-              {/* <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  name="phone_number"
-                  label="Teléfono"
-                  type="int"
-                  id="phone_number"
-                />
-              </Grid> */}
               <Grid item xs={12}></Grid>
             </Grid>
             <Button
@@ -181,18 +164,17 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Crear cuenta
+              Create account
             </Button>
             <Grid container justifyContent="center">
               <Grid item>
                 <Link href="/login" variant="body2">
-                  ¿Ya tienes una cuenta? Iniciar sesión
+                  Already have an account? Log in
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );

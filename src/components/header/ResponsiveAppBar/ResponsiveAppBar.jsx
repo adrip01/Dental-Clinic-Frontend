@@ -198,7 +198,7 @@ function ResponsiveAppBar() {
                     bgcolor: "primary.dark",
                   }}
                 >
-                  Register
+                  Sign Up
                 </Button>
               </NavLink>
             </Box>

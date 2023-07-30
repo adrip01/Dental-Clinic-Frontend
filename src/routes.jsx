@@ -28,7 +28,7 @@ export default function Router() {
         <Route path="/users/my-appointments" element={<MyAppointmentsPage />} />
         <Route path="/users/new-appointment" element={<NewAppointmentPage />} />
         <Route
-          path="/users/edit-appointment"
+          path="/users/edit-appointment/:id"
           element={<EditAppointmentPage />}
         />
         <Route path="/404" element={<Page404 />} />
